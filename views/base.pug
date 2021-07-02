@@ -1,0 +1,30 @@
+doctype html
+html 
+    block head
+        head 
+            meta(charset='UTF-8')
+            meta(name='viewport' content='width=device-width, initial-scale=1.0')
+            link(rel='stylesheet' href='/css/style.css')
+            link(rel='shortcut icon' type='/img/png' href='/img/favicon.png')
+            link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+            script(src='https://js.stripe.com/v3/')
+            title Natours | #{title}
+
+    body
+        //HEADER
+        include header 
+
+        block content 
+            h1 This is the base template
+
+        include _footer 
+
+        block scripts
+            script(src="/js/bundle.js") 
+            //- script(src='/js/map-box.js') 
+
+
+
+
+
+    
