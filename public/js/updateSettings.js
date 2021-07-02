@@ -3,12 +3,12 @@ import axios from 'axios';
 import { showAlert } from './alert';
 
 export const updateSettings = async (data, type) => {
-  console.log(data, type);
+  // console.log(data, type);
   try {
     const url =
       type === 'Password'
-        ? 'http://localhost:8000/api/v1/users/updatePassword'
-        : 'http://localhost:8000/api/v1/users/updateMe';
+        ? '/api/v1/users/updatePassword'
+        : '/api/v1/users/updateMe';
 
     const response = await axios({
       method: 'PATCH',
@@ -22,7 +22,7 @@ export const updateSettings = async (data, type) => {
       return 'response primise.....';
     }
   } catch (error) {
-    console.log('There was an error💥💥💥', error)
+    // console.log('There was an error💥💥💥', error)
     // console.log(error.response);
     if(error.response){
       return showAlert(error.response.data.message, 'error');

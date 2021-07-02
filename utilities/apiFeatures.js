@@ -16,7 +16,7 @@ class APIFeatures {
     queryObj = JSON.parse(
       queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
     );
-    console.log(queryObj);
+    // console.log(queryObj);
     this.query = this.query.find(queryObj);
     return this;
   }
@@ -33,8 +33,8 @@ class APIFeatures {
         .split(',')
         .concat('-createdAt')
         .join(' ');
-      console.log(this.queryString.sort);
-      console.log('sortby', sortBy);
+      // console.log(this.queryString.sort);
+      // console.log('sortby', sortBy);
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort('-createdAt');
@@ -45,7 +45,7 @@ class APIFeatures {
   limitFields() {
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(',').join(' ');
-      console.log('select', fields);
+      // console.log('select', fields);
       this.query = this.query.select(fields);
     } else {
       this.query = this.query.select('-__v');

@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'development') {
   );
 }
 
-const start = Date.now();
+// const start = Date.now();
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -29,7 +29,7 @@ mongoose
   })
   .then(() => {
     console.log('connection successful!!✔✔🚀');
-    console.log(`It took ${Date.now() - start} to connect to db`);
+    // console.log(`It took ${Date.now() - start} to connect to db`);
     if (process.env.NODE_ENV !== 'development')
       console.log('remote database in use');
   });

@@ -17,7 +17,7 @@ exports.getAll = (Model, popOption) =>
 
     const query = Model.find(filter);
     if (popOption) {
-      console.log('in pop options');
+      // console.log('in pop options');
       query.populate(popOption);
     }
     const featuresApi = new APIFeatures(query, req.query)
@@ -61,7 +61,7 @@ exports.getOne = (Model, popOption) =>
 
     if (popOption) {
       docQuery.populate(popOption);
-      console.log('🧨🧨🧨🎇🎆🎆🎆pop options', popOption);
+      // console.log('🧨🧨🧨🎇🎆🎆🎆pop options', popOption);
     }
 
     const apiFeatureQuery = new APIFeatures(docQuery, req.query).limitFields();

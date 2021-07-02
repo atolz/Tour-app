@@ -86,7 +86,7 @@ exports.getAccount = (req, res) => {
 };
 
 exports.updateMe = catchAsync(async (req, res) => {
-  console.log('URL ENCODED BODY', req.body);
+  // console.log('URL ENCODED BODY', req.body);
   const user = await User.findByIdAndUpdate(
     req.user._id,
     { name: req.body.name, email: req.body.email },
@@ -100,5 +100,5 @@ exports.updateMe = catchAsync(async (req, res) => {
     title: 'Your account',
     user,
   });
-  console.log(user);
+  // console.log(user);
 });

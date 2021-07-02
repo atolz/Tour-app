@@ -1,6 +1,7 @@
 const AppError = require('../utilities/appError');
 
 const handleDevErr = (err, req, res) => {
+  console.error('Error💥:', err);
   if (req.originalUrl.startsWith('/api')) {
     return res.status(err.statusCode).json({
       status: err.status,
@@ -9,7 +10,6 @@ const handleDevErr = (err, req, res) => {
       stack: err.stack,
     });
   }
-  console.error('Error💥:', err);
   // if (
   //   err.message === 'Pls send a valid authorization token' ||
   //   'jwt malformed'
@@ -25,9 +25,9 @@ const handleDevErr = (err, req, res) => {
 };
 
 const handleProdErr = (err, req, res) => {
+  // console.error('Error 💥:', err);
   if (req.originalUrl.startsWith('/api')) {
     if (!err.isOperational) {
-      console.error('Error 💥:', err);
       err.message = 'Something went very wrong!!';
       err.statusCode = 500;
     }
@@ -38,12 +38,12 @@ const handleProdErr = (err, req, res) => {
     });
   }
   if (!err.isOperational) {
-    console.error('Error 💥:', err);
+    // console.error('Error 💥:', err);
     err.message = 'Something went very wrong! Try again';
     err.statusCode = 500;
   }
 
-  // console.error('Error💥:', err);
+  console.error('Error💥:', err);
   res.status(200).render('error', {
     title: 'An error occured',
     message: err.message,
@@ -67,8 +67,8 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
 
-  console.log('in error mddleware', process.env.NODE_ENV);
-  console.log(err);
+  // console.log('in error mddleware', process.env.NODE_ENV);
+  // console.log(err);
 
   if (process.env.NODE_ENV === 'production') {
     // let error = { ...err };

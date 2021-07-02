@@ -25,7 +25,7 @@ exports.uploadTourImages = upload.fields([
 ]);
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.files);
+  // console.log(req.files);
   if (!req.files) return next();
 
   //Image cover
@@ -146,12 +146,12 @@ exports.getMonthlyPlans = catchAsync(async (req, res, next) => {
 });
 
 exports.getToursWithin = catchAsync(async (req, res, next) => {
-  console.log('test 111');
+  // console.log('test 111');
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
   const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
-  console.log(distance, lat, lng, unit, radius);
+  // console.log(distance, lat, lng, unit, radius);
 
   if (!lat || !lng) {
     return next(new AppError('Pls specify a lng and lat coordinate', 401));
@@ -175,7 +175,7 @@ exports.getToursDistances = catchAsync(async (req, res, next) => {
   const [lat, lng] = latlng.split(',');
 
   const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
-  console.log(lat, lng, unit);
+  // console.log(lat, lng, unit);
 
   if (!lat || !lng) {
     return next(new AppError('Pls specify a lng and lat coordinate', 401));

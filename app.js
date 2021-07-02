@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const compression = require('compression');
 
 const AppError = require('./utilities/appError');
 const globalErrorHandler = require('./controllers/error');
@@ -35,7 +36,7 @@ app.use(helmet());
 //Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
-  console.log('indeve mode');
+  // console.log('indeve mode');
 }
 
 //Body parser, reading data from the body into req.body
@@ -78,16 +79,17 @@ const limiter = rateLimit({
   },
 });
 app.use('/api', limiter);
+app.use(compression());
 
 //custom middleware
-app.use('/api', (req, res, next) => {
-  console.log(req.query.sort);
-  console.log(req.query);
-  next();
-});
+// app.use('/api', (req, res, next) => {
+//   console.log(req.query.sort);
+//   console.log(req.query);
+//   next();
+// });
 app.use((req, res, next) => {
   // console.log('request cookies🍪', req.url, req.cookies);
-  console.log('request body👀👀👀', req.body);
+  // console.log('request body👀👀👀', req.body);
   next();
 });
 

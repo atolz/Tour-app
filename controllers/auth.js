@@ -37,7 +37,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
   // http://localhost:8000/me
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
+  // console.log(url);
   await new Email(newUser, url).sendWelcome();
 
   sendToken(newUser, res, 201);
@@ -64,19 +64,19 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //check and find token
-  console.log(req.rateLimit);
+  // console.log(req.rateLimit);
 
   let token;
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
-    console.log('token gotten from authorization Bearer');
+    // console.log('token gotten from authorization Bearer');
     token = req.headers.authorization.split(' ')[1];
   }
 
   if (req.cookies.jwt) {
-    console.log('token gotten from cookie');
+    // console.log('token gotten from cookie');
     token = req.cookies.jwt;
   }
   if (!token) {
@@ -85,7 +85,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   //verification of the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
+  // console.log(decoded);
 
   //check if the user still exist
   const currentUser = await User.findById(decoded.id);
@@ -123,7 +123,7 @@ exports.isLoggedIn = async (req, res, next) => {
         req.cookies.jwt,
         process.env.JWT_SECRET
       );
-      console.log(decoded);
+      // console.log(decoded);
       //check if the user still exist
       const currentUser = await User.findById(decoded.id);
       if (!currentUser) {
@@ -136,7 +136,7 @@ exports.isLoggedIn = async (req, res, next) => {
       }
 
       res.locals.user = currentUser;
-      console.log(res.locals.user);
+      // console.log(res.locals.user);
       return next();
     }
     next();
@@ -176,13 +176,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    console.log('dids find this usre');
+    // console.log('dids find this usre');
     return next(new AppError('User not found. Please send a valid email', 404));
   }
 
   // 2)generated reset token
   const resetToken = user.generateForgotPasswordToken();
-  console.log(user);
+  // console.log(user);
   await user.save({ validateBeforeSave: false });
 
   // 3)send reset token to user email
@@ -227,7 +227,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide a valid token', 400));
   }
   const hashToken = crypto.createHash('sha256').update(token).digest('hex');
-  console.log(hashToken);
+  // console.log(hashToken);
 
   // 2) check if user exist and get user based on token
   const user = await User.findOne({

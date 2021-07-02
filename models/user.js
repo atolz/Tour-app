@@ -92,8 +92,8 @@ userSchema.methods.isCorrectPassword = async function (candidatePassword) {
 
 userSchema.methods.hasChangedPassword = function (issuedAt) {
   if (this.changedPasswordAt) {
-    console.log('in has changed password at');
-    console.log(this.changedPasswordAt.getTime() / 1000, issuedAt);
+    // console.log('in has changed password at');
+    // console.log(this.changedPasswordAt.getTime() / 1000, issuedAt);
     return this.changedPasswordAt.getTime() / 1000 > issuedAt;
   }
   return false;
@@ -106,7 +106,7 @@ userSchema.methods.generateForgotPasswordToken = function () {
     .update(randomString)
     .digest('hex');
 
-  console.log({ resetToken }, { randomString });
+  // console.log({ resetToken }, { randomString });
 
   this.forgotPasswordToken = resetToken;
   this.forgotPasswordTokenExpiresIn = Date.now() + 10 * 60 * 1000;

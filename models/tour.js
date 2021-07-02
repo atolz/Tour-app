@@ -123,7 +123,7 @@ tourSchema.index({ duration: 1, price: -1 });
 
 //VIRTUAL PROPERTY MIDDLEWARES
 tourSchema.virtual('weeksDuration').get(function () {
-  console.log('in virtual property');
+  // console.log('in virtual property');
   if (this.duration < 7) {
     return `${this.duration}days`;
   }
@@ -148,7 +148,7 @@ tourSchema.virtual('reviews', {
 //Middleware/hook ONLY FOR save() and create()
 //DOCUMENT MIDDLEWARE
 tourSchema.pre('save', function (next) {
-  console.log('pre save middleware');
+  // console.log('pre save middleware');
   this.slug = slugify(this.name);
   next();
 });
@@ -185,12 +185,12 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.post(/^find/, function (doc, next) {
-  console.log(
-    `Query middleware took ${(Date.now() - this.startTime) / 1000}seconds`
-  );
-  next();
-});
+// tourSchema.post(/^find/, function (doc, next) {
+//   console.log(
+//     `Query middleware took ${(Date.now() - this.startTime) / 1000}seconds`
+//   );
+//   next();
+// });
 
 // tourSchema.pre('aggregate', function (next) {
 //   this.pipeline().unshift({

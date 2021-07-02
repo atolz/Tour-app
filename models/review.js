@@ -111,7 +111,7 @@ reviewSchema.post('save', function () {
 reviewSchema.pre(/^findOneAnd/, async function (next) {
   const review = await this.findOne();
   this.reviewDoc = review;
-  console.log('in pre query middleware', this.review);
+  // console.log('in pre query middleware', this.review);
   next();
 });
 

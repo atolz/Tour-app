@@ -50,13 +50,13 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 });
 
 exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-  console.log('in creat bookings CHeckout🎈🧨🎈');
+  // console.log('in creat bookings CHeckout🎈🧨🎈');
   const { tour, user, price, bookMethod } = req.query;
   if (!tour || !user || !price || !bookMethod) return next();
 
   console.log('booking🏀🥎🥎🥎.....................');
   const booking = await Booking.create({ tour, user, price, bookMethod });
-  console.log('booking🏀🥎🥎🥎', booking, req.originalUrl.split('?')[0]);
+  // console.log('booking🏀🥎🥎🥎', booking, req.originalUrl.split('?')[0]);
   res.redirect(req.originalUrl.split('?')[0]);
 });
 

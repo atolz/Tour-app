@@ -4,7 +4,7 @@ import { login, logout } from './login';
 import { displayMap } from './map-box';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
-console.log('Hello from index.js');
+// console.log('Hello from index.js');
 
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form--login');
@@ -15,7 +15,7 @@ const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 
 if (loginForm) {
-  console.log('in login form');
+  // console.log('in login form');
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -27,7 +27,7 @@ if (loginForm) {
 
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
-  console.log(locations);
+  // console.log(locations);
   displayMap(locations);
 }
 
@@ -61,7 +61,7 @@ if (userPasswordForm) {
       { password, newPassword, passwordConfirm },
       'Password'
     );
-    console.log('promise update', update);
+    // console.log('promise update', update);
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
