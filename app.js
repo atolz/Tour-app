@@ -18,8 +18,9 @@ const reviewRouter = require('./routes/review');
 const viewsRouter = require('./routes/views');
 const bookingRouter = require('./routes/booking');
 
-//APP SETUP AND VARIABLES INIT.
+//Start express app
 const app = express();
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
