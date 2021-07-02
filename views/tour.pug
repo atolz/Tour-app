@@ -94,7 +94,9 @@ block content
             .cta__content
                 h2.heading-secondary What are you waiting for?
                 p.cta__text 10 days. 1 adventure. Infinite memories. Make it yours today!
-                - const hasBookings = user.bookings.filter((booking)=> `${booking.tour}` === `${tour._id}`)
+                - let hasBookings = [];
+                if user
+                    - hasBookings = user.bookings.filter((booking)=> `${booking.tour}` === `${tour._id}`)
                 - if (user && !hasBookings[0])
                     button.btn.btn--green.span-all-rows#book-tour(data-tour-Id=`${tour._id}`) Book tour now!
                 - if (!user )
