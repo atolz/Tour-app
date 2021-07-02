@@ -7,7 +7,7 @@ const catchAsync = require('../utilities/catchAsync');
 exports.addCSPHeaders = (req, res, next) => {
   res.set(
     'Content-Security-Policy',
-    "default-src 'self' https://*.mapbox.com https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' blob: data:;object-src 'none';script-src https://js.stripe.com/v3/ https://cdnjs.cloudflare.com /js/bundle.js https://api.mapbox.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;connect-src 'self' https://*.stripe.com https://*.mapbox.com"
+    "default-src 'self' https://*.mapbox.com https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' blob: data:;object-src 'none';script-src https://js.stripe.com/v3/ https://cdnjs.cloudflare.com */js/bundle.js https://api.mapbox.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;connect-src 'self' https://*.stripe.com https://*.mapbox.com"
   );
   next();
 };
