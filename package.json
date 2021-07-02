@@ -4,7 +4,8 @@
   "description": "Learning express and node.js",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
     "start:prod": "set NODE_ENV=production&& nodemon server.js",
     "import:dev-data": "node ./dev-data/data/import-dev-data.js --import",
     "delete:dev-data": "node ./dev-data/data/import-dev-data.js --delete",
