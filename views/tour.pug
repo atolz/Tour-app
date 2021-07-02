@@ -94,13 +94,21 @@ block content
             .cta__content
                 h2.heading-secondary What are you waiting for?
                 p.cta__text 10 days. 1 adventure. Infinite memories. Make it yours today!
-                - let hasBookings = [];
-                if user
-                    - hasBookings = user.bookings.filter((booking)=> `${booking.tour}` === `${tour._id}`)
-                - if (user && !hasBookings[0])
+                - if (user && !userHasBooked) 
                     button.btn.btn--green.span-all-rows#book-tour(data-tour-Id=`${tour._id}`) Book tour now!
-                - if (!user )
+                - if (!user)
                     a.btn.btn--green.span-all-rows(href='/login') Log in to book a tour!
-                - if (user && hasBookings[0]) 
+                - if (userHasBooked)
                     a.btn.btn--green.span-all-rows(href='/my-bookings') You have booked this tour!
+
+
+                //- - let hasBookings = [];
+                //- if user
+                //-     - hasBookings = user.bookings.filter((booking)=> `${booking.tour}` === `${tour._id}`)
+                //- - if (user && !hasBookings[0])
+                //-     button.btn.btn--green.span-all-rows#book-tour(data-tour-Id=`${tour._id}`) Book tour now!
+                //- - if (!user )
+                //-     a.btn.btn--green.span-all-rows(href='/login') Log in to book a tour!
+                //- - if (user && hasBookings[0]) 
+                //-     a.btn.btn--green.span-all-rows(href='/my-bookings') You have booked this tour!
                 
