@@ -8,21 +8,24 @@ const catchAsync = require('../utilities/catchAsync');
 const signJwt = require('../utilities/genJwt');
 const Email = require('../utilities/sendEmail');
 
-function sendToken(user, res, statusCode) {
+function sendToken(user, req, res, statusCode) {
   const token = signJwt(user._id);
   user.password = undefined;
   user.changedPasswordAt = undefined;
 
-  const cookiesOptions = {
+  const cookieOptions = {
     expires: new Date(Date.now() + process.env.COOKIE_EXP * 60 * 60 * 1000),
     httpOnly: true,
+    // secure: true,
+    // path: '/me',
   };
 
-  res.cookie('jwt', token, cookiesOptions);
-
-  if (process.env.NODE_ENV === 'production') {
-    cookiesOptions.secure = true;
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+    cookieOptions.secure = true;
+    console.log('Is connection secure🪁🎯🪁', cookieOptions.secure);
   }
+  res.cookie('jwt', token, cookieOptions);
+
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -40,7 +43,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   // console.log(url);
   await new Email(newUser, url).sendWelcome();
 
-  sendToken(newUser, res, 201);
+  sendToken(newUser, req, res, 201);
 });
 
 exports.logIn = catchAsync(async (req, res, next) => {
@@ -59,7 +62,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
   }
 
   //generate and send token
-  sendToken(user, res, 200);
+  sendToken(user, req, res, 200);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -247,7 +250,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 5) log user in, send Jwt
-  sendToken(user, res, 200);
+  sendToken(user, req, res, 200);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -265,7 +268,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 4) log user in
-  sendToken(user, res, 200);
+  sendToken(user, req, res, 200);
 });
 
 // const user = await User.findByIdAndUpdate(req.user._id, req.body, {

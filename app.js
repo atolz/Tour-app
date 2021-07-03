@@ -1,6 +1,6 @@
 const path = require('path');
 
-// const cors = require('cors');
+const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -22,13 +22,17 @@ const bookingRouter = require('./routes/booking');
 //Start express app.
 const app = express();
 
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 //GLOBAL MIDDLEWARES
 //Serving static files
 app.use(express.static(`${__dirname}/public`));
-// app.use(cors());
+app.use(cors());
+
+app.options('*', cors());
 
 //Set security HTTP headers
 app.use(helmet());
@@ -80,7 +84,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 app.use(compression());
-
 //custom middleware
 // app.use('/api', (req, res, next) => {
 //   console.log(req.query.sort);
@@ -88,7 +91,8 @@ app.use(compression());
 //   next();
 // });
 app.use((req, res, next) => {
-  // console.log('request cookies🍪', req.url, req.cookies);
+  console.log('Is request secured🎈🎈🎈🎈', req.secure);
+  console.log('request cookies🍪', req.url, req.cookies);
   // console.log('request body👀👀👀', req.body);
   next();
 });
