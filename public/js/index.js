@@ -4,6 +4,7 @@ import { login, logout } from './login';
 import { displayMap } from './map-box';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alert';
 // console.log('Hello from index.js');
 
 // DOM ELEMENTS
@@ -13,6 +14,7 @@ const logoutEl = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const alert = document.querySelector('body').dataset.alert;
 
 if (loginForm) {
   // console.log('in login form');
@@ -78,4 +80,12 @@ if (bookBtn) {
     bookTour(tourId);
     // e.target.textContent = 'Book tour now';
   });
+}
+
+if (alert) {
+  console.log('in alert...', alert);
+  console.log(document.querySelector('body').dataset);
+  showAlert(alert, 'success', 20);
+} else {
+  console.log('No alert.....');
 }

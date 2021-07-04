@@ -16,7 +16,7 @@ function sendToken(user, req, res, statusCode) {
   const cookieOptions = {
     expires: new Date(Date.now() + process.env.COOKIE_EXP * 60 * 60 * 1000),
     httpOnly: true,
-    // secure: true,
+    // secure: false,
     // path: '/me',
   };
 

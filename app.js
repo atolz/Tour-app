@@ -18,6 +18,7 @@ const userRouter = require('./routes/user');
 const reviewRouter = require('./routes/review');
 const viewsRouter = require('./routes/views');
 const bookingRouter = require('./routes/booking');
+const bookingController = require('./controllers/booking');
 
 //Start express app.
 const app = express();
@@ -43,6 +44,11 @@ if (process.env.NODE_ENV === 'development') {
   // console.log('indeve mode');
 }
 
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 //Body parser, reading data from the body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));

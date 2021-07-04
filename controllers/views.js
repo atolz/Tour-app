@@ -12,6 +12,18 @@ exports.addCSPHeaders = (req, res, next) => {
   next();
 };
 
+exports.addAlert = (req, res, next) => {
+  const { alert } = req.query;
+
+  res.locals.alert = '';
+  if (!alert) return next();
+
+  if (alert === 'booking')
+    res.locals.alert =
+      "You have successefully booked a tour!!. Pls check your email for a confirmation. If you can't see your bookings yet, pls refresh this page or visit later";
+  next();
+};
+
 exports.getOverview = catchAsync(async (req, res) => {
   // 1) get Tours from tour collection
   const tours = await Tour.find();

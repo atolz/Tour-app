@@ -6,7 +6,8 @@ export const closeAlert = () => {
   }
 };
 
-export const showAlert = (msg, status) => {
+export const showAlert = (msg, status, time = 7) => {
+  console.log('in showALert--time', time);
   closeAlert();
   const alert = document.createElement('div');
   alert.className = `alert alert--${status}`;
@@ -16,5 +17,5 @@ export const showAlert = (msg, status) => {
 
   window.setTimeout(() => {
     closeAlert();
-  }, 5000);
+  }, time * 1000);
 };
