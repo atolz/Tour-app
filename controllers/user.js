@@ -34,11 +34,21 @@ exports.resizeUserPhoto = async (req, res, next) => {
   console.log('resizing.....✔✔✔💥💥💥');
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
   //add to request so as to save file to disk when user data is successfully updated
-  await sharp(req.file.buffer)
+
+  //Dont save file yet in case theres error updating the user...
+
+  req.sharpInstance = sharp(req.file.buffer)
     .resize(500, 500, { fit: 'cover', position: 'center' })
     .toFormat('jpeg')
-    .jpeg({ quality: 60 })
-    .toFile(`public/img/users/${req.file.filename}`);
+    .jpeg({ quality: 60 });
+
+  //This saves the file to disk regardless if the userUpdate data was successful or not
+
+  // await sharp(req.file.buffer)
+  //   .resize(500, 500, { fit: 'cover', position: 'center' })
+  //   .toFormat('jpeg')
+  //   .jpeg({ quality: 60 })
+  //   .toFile(`public/img/users/${req.file.filename}`);
 
   next();
 };
@@ -84,17 +94,24 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'passwordConfirm',
     'role',
     'changedPasswordAt',
+    'photo',
   ];
   const update = filterObj({ ...req.body }, ...excludeUpdates);
 
   if (req.file) {
+    // console.log('req.file awailabel...', req.file);
     update.photo = req.file.filename;
+  } else {
+    // console.log('No req.file awailabel...🪁🎈🏀', req.file);
   }
+  // console.log('Update Data.📃🪁🎯', update);
 
   const user = await User.findByIdAndUpdate(req.user.id, update, {
     runValidators: true,
     new: true,
   });
+  if (req.file)
+    await req.sharpInstance.toFile(`public/img/users/${req.file.filename}`);
 
   // if (req.file && req.file.sharp) {
   //   req.file.sharp.toFile(`public/img/users/${req.file.filename}`);
