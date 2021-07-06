@@ -6,6 +6,15 @@ const AppError = require('../utilities/appError');
 const catchAsync = require('../utilities/catchAsync');
 const handlerFactory = require('./handlersFactory');
 
+exports.hasBookedTour = async (req, res, next) => {
+  const booking = await Booking.findOne({
+    user: req.user._id,
+    tour: req.params.tourId,
+  });
+  if (!booking) return next();
+  return next(new AppError('You have booked this tour already.', 400));
+};
+
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get tour
   const tour = await Tour.findById(req.params.tourId);

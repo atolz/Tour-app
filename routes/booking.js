@@ -6,7 +6,11 @@ const reviewHandler = require('../controllers/review');
 const router = express.Router({ mergeParams: true });
 
 router.use(authController.protect);
-router.get('/checkout-session/:tourId', bookingController.getCheckoutSession);
+router.get(
+  '/checkout-session/:tourId',
+  bookingController.hasBookedTour,
+  bookingController.getCheckoutSession
+);
 
 router.route('/').get(bookingController.getAllBookings).post(
   authController.restrictAccessTo('admin', 'lead-guide'),

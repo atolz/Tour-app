@@ -68,16 +68,16 @@ exports.getTour = catchAsync(async (req, res, next) => {
     return next(new AppError('Tour not found', 404));
   }
 
-  let userHasBooked = false;
-  if (res.locals.user) {
-    // console.log('res.locals.user🧨🎇...', res.locals.user);
-    res.locals.user.bookings.forEach((el) => {
-      // console.log('in for each', el.tour, tour._id);
-      if (`${el.tour}` === `${tour._id}`) {
-        userHasBooked = true;
-      }
-    });
-  }
+  // let userHasBooked = false;
+  // if (res.locals.user) {
+  //   // console.log('res.locals.user🧨🎇...', res.locals.user);
+  //   res.locals.user.bookings.forEach((el) => {
+  //     // console.log('in for each', el.tour, tour._id);
+  //     if (`${el.tour}` === `${tour._id}`) {
+  //       userHasBooked = true;
+  //     }
+  //   });
+  // }
   // console.log('....', userHasBooked, tour._id);
 
   res
@@ -89,7 +89,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     .render('tour', {
       title: tour.name,
       tour,
-      userHasBooked,
+      // userHasBooked,
     });
 
   // res.status(200).render('tour', {

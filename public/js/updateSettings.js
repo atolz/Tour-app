@@ -24,10 +24,9 @@ export const updateSettings = async (data, type) => {
   } catch (error) {
     // console.log('There was an error💥💥💥', error)
     // console.log(error.response);
-    if(error.response){
+    if (error.response) {
       return showAlert(error.response.data.message, 'error');
     }
     showAlert('An error occured!😕. Pls check your internet!', 'error');
-
   }
 };

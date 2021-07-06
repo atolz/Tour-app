@@ -7,6 +7,8 @@ block content
             each tour in tours
                 .card
                     .card__header
+                        svg.card__icon.card__icon--like
+                                use(xlink:href='img/sprite.svg#icon-like')
                         .card__picture
                             .card__picture-overlay &nbsp;
                             img.card__picture-img(src=`img/tours/${tour.imageCover}`, alt=`${tour.name}`)

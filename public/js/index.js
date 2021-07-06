@@ -40,10 +40,18 @@ if (logoutEl) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    // console.log('target form', e.target.form);
+    // console.log('email', e.target.email);
+    // console.log('email value', e.target.email.value);
+    // console.log('photo', e.target.photo);
+    // console.log('photo value', e.target.photo.value);
+    // console.log('photo value file//', e.target.photo.files);
     const formData = new FormData();
     formData.append('email', document.getElementById('email').value);
     formData.append('name', document.getElementById('name').value);
     formData.append('photo', document.getElementById('photo').files[0]);
+    // console.log(document.getElementById('photo').files[0]);
+    // console.log(document.getElementById('photo').files);
     updateSettings(formData, 'Data');
     // const email = document.getElementById('email').value;
     // const name = document.getElementById('name').value;
@@ -73,12 +81,13 @@ if (userPasswordForm) {
 
 if (bookBtn) {
   console.log('in book tour....');
-  bookBtn.addEventListener('click', (e) => {
+  bookBtn.addEventListener('click', async (e) => {
     const { tourId } = e.target.dataset;
     e.target.textContent = 'Processing...';
     e.target.disabled = true;
-    bookTour(tourId);
-    // e.target.textContent = 'Book tour now';
+    await bookTour(tourId);
+    e.target.textContent = 'You have booked this tour.';
+    e.target.disabled = false;
   });
 }
 

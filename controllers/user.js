@@ -96,6 +96,12 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'changedPasswordAt',
     'photo',
   ];
+  console.log('Update Data.📃🪁🎯', req.body);
+  // const test = {
+  //   0: 'my value',
+  // };
+  // console.log(test[0]);
+
   const update = filterObj({ ...req.body }, ...excludeUpdates);
 
   if (req.file) {

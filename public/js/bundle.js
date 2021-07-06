@@ -8771,15 +8771,24 @@ var bookTour = /*#__PURE__*/function () {
             });
 
           case 6:
-            _context.next = 11;
+            _context.next = 13;
             break;
 
           case 8:
             _context.prev = 8;
             _context.t0 = _context["catch"](0);
+
+            if (!(_context.t0.response.data.message === 'You have booked this tour already.')) {
+              _context.next = 12;
+              break;
+            }
+
+            return _context.abrupt("return", (0, _alert.showAlert)('You have booked this tour already. Pls check your bookings', 'success'));
+
+          case 12:
             (0, _alert.showAlert)(_context.t0, 'error');
 
-          case 11:
+          case 13:
           case "end":
             return _context.stop();
         }
@@ -9106,11 +9115,19 @@ if (logoutEl) {
 
 if (userDataForm) {
   userDataForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+    e.preventDefault(); // console.log('target form', e.target.form);
+    // console.log('email', e.target.email);
+    // console.log('email value', e.target.email.value);
+    // console.log('photo', e.target.photo);
+    // console.log('photo value', e.target.photo.value);
+    // console.log('photo value file//', e.target.photo.files);
+
     var formData = new FormData();
     formData.append('email', document.getElementById('email').value);
     formData.append('name', document.getElementById('name').value);
-    formData.append('photo', document.getElementById('photo').files[0]);
+    formData.append('photo', document.getElementById('photo').files[0]); // console.log(document.getElementById('photo').files[0]);
+    // console.log(document.getElementById('photo').files);
+
     (0, _updateSettings.updateSettings)(formData, 'Data'); // const email = document.getElementById('email').value;
     // const name = document.getElementById('name').value;
     // const file = document.getElementById('photo').files[0];
@@ -9162,12 +9179,35 @@ if (userPasswordForm) {
 
 if (bookBtn) {
   console.log('in book tour....');
-  bookBtn.addEventListener('click', function (e) {
-    var tourId = e.target.dataset.tourId;
-    e.target.textContent = 'Processing...';
-    e.target.disabled = true;
-    (0, _stripe.bookTour)(tourId); // e.target.textContent = 'Book tour now';
-  });
+  bookBtn.addEventListener('click', /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+      var tourId;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              tourId = e.target.dataset.tourId;
+              e.target.textContent = 'Processing...';
+              e.target.disabled = true;
+              _context2.next = 5;
+              return (0, _stripe.bookTour)(tourId);
+
+            case 5:
+              e.target.textContent = 'You have booked this tour.';
+              e.target.disabled = false;
+
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
 }
 
 if (alert) {
