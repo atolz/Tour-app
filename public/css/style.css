@@ -1322,3 +1322,27 @@ body {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
+
+/* -----------------------------------MY ADDED STYLE------------------------------------- */
+.card__icon--like{
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  z-index: 10000;
+  cursor: pointer;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  fill: none;
+  stroke: #ffffff;
+  transition: transform 0.6s cubic-bezier(0.68, -1, 0.32, 2.6);
+  backface-visibility: hidden;
+}
+.card__icon--active{
+  backface-visibility: hidden;
+  transform: scale(1.2);
+  height: 2.5rem;
+  width: 2.5rem;
+  fill: #28b487;
+  stroke: #ffffff;
+}

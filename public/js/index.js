@@ -15,6 +15,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const alert = document.querySelector('body').dataset.alert;
+const likes = document.querySelectorAll('.card__icon.card__icon--like');
 
 if (loginForm) {
   // console.log('in login form');
@@ -97,4 +98,14 @@ if (alert) {
   showAlert(alert, 'success', 20);
 } else {
   console.log('No alert.....');
+}
+
+if (likes) {
+  // toggle class list dosent work for svgs
+  likes.forEach((like) => {
+    like.addEventListener('click', (e) => {
+      like.classList.toggle('card__icon--active');
+      console.log(e.target);
+    });
+  });
 }

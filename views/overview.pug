@@ -8,7 +8,10 @@ block content
                 .card
                     .card__header
                         svg.card__icon.card__icon--like
-                                use(xlink:href='img/sprite.svg#icon-like')
+                            use(xlink:href='img/icons.svg#icon-like')
+                        //- div.card__icon.card__icon--like 
+                        //-     svg
+                        //-         use(xlink:href='img/icons.svg#icon-like')
                         .card__picture
                             .card__picture-overlay &nbsp;
                             img.card__picture-img(src=`img/tours/${tour.imageCover}`, alt=`${tour.name}`)
