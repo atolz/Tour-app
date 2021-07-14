@@ -5,6 +5,7 @@ import { displayMap } from './map-box';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alert';
+import { hasSaved, addToSaved, removeSaved } from './save';
 // console.log('Hello from index.js');
 
 // DOM ELEMENTS
@@ -16,6 +17,7 @@ const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const alert = document.querySelector('body').dataset.alert;
 const likes = document.querySelectorAll('.card__icon.card__icon--like');
+// const likesCount = document.querySelector('.like span');
 
 if (loginForm) {
   // console.log('in login form');
@@ -102,10 +104,66 @@ if (alert) {
 
 if (likes) {
   // toggle class list dosent work for svgs
-  likes.forEach((like) => {
-    like.addEventListener('click', (e) => {
-      like.classList.toggle('card__icon--active');
-      console.log(e.target);
+  likes.forEach(async (like) => {
+    const tourId = like.dataset.tourId;
+    const userId = like.dataset.userId;
+    const hasLiked = await hasSaved(tourId, userId);
+    let lastAction = 'unsave';
+    let reqTimeout;
+
+    if (hasLiked) {
+      like.classList.add('card__icon--active');
+      lastAction = 'save';
+    }
+
+    like.addEventListener('click', async (e) => {
+      e.currentTarget.classList.toggle('card__icon--active');
+
+      if (like.classList.contains('card__icon--active')) {
+        like.nextElementSibling.textContent =
+          parseInt(like.nextElementSibling.textContent, 10) + 1;
+
+        if (reqTimeout) clearTimeout(reqTimeout);
+
+        reqTimeout = setTimeout(async () => {
+          if (lastAction === 'save') return;
+          const saved = await addToSaved(tourId, userId);
+          lastAction = 'save';
+          if (saved) showAlert('Tour saved for later', 'success');
+        }, 1500);
+      } else {
+        like.nextElementSibling.textContent =
+          parseInt(like.nextElementSibling.textContent, 10) - 1;
+          
+        if (reqTimeout) clearTimeout(reqTimeout);
+
+        reqTimeout = setTimeout(async () => {
+          if (lastAction === 'unsave') return;
+          const unsaved = await removeSaved(tourId, userId);
+          lastAction = 'unsave';
+          if (unsaved) showAlert('Tour removed from saved', 'success');
+        }, 1500);
+      }
+      //take not of e.target and the actual element
+      // console.log(e.target);
+      // console.log(e.currentTarget);
+      // console.log(like);
     });
   });
 }
+
+const toggleSave = async (tourId, userId, lastAction, action) => {
+  if (action === 'save') {
+    if (lastAction === 'save') return;
+    const saved = await addToSaved(tourId, userId);
+    lastAction = 'save';
+    if (saved) showAlert('Tour saved for later', 'success');
+  }
+
+  if (action === 'unsave') {
+    if (lastAction === 'unsave') return;
+    const unsaved = await removeSaved(tourId, userId);
+    lastAction = 'unsave';
+    if (unsaved) showAlert('Tour removed from saved', 'success');
+  }
+};

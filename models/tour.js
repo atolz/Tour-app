@@ -16,6 +16,10 @@ const tourSchema = new mongoose.Schema(
       ],
     },
     slug: String,
+    saves: {
+      type: Number,
+      default: 0,
+    },
     duration: {
       type: Number,
       required: [true, 'A tour must have a duration'],
@@ -135,6 +139,12 @@ tourSchema.virtual('weeksDuration').get(function () {
 //Virtual populate
 tourSchema.virtual('reviews', {
   ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
+});
+
+tourSchema.virtual('allSaves', {
+  ref: 'Saved',
   foreignField: 'tour',
   localField: '_id',
 });

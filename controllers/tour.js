@@ -67,7 +67,10 @@ exports.aliasTopCheap5 = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = handlerFactory.getAll(Tour);
+exports.getAllTours = handlerFactory.getAll(Tour, {
+  path: 'allSaves',
+  select: '-__v',
+});
 
 exports.getTour = handlerFactory.getOne(Tour, {
   path: 'reviews',

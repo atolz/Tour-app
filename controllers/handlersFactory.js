@@ -8,7 +8,7 @@ exports.getAll = (Model, popOption) =>
     //SORT
     //LIMITFIELDS
     //PAGINATION
-
+    // console.log('in get all🎈🎇🥎🧧🪁', req.query);
     //To allow for nested GET reviews on tour
     //For reviews i.e /tours/:id/reviews
     let filter = {};

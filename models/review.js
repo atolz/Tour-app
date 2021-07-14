@@ -115,11 +115,22 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
   next();
 });
 
-reviewSchema.post(/^findOneAnd/, async function () {
+reviewSchema.post(/^findOneAnd/, async function (doc, next) {
   if (this.reviewDoc) {
-    this.reviewDoc.constructor.calcRatings(this.reviewDoc.tour);
+    await this.reviewDoc.constructor.calcRatings(this.reviewDoc.tour);
   }
 });
+
+// reviewSchema.post(/^findOneAnd/, async function (docs, next) {
+//   // console.log('in FindOne ANd post...💥💥🧧🧧',doc, this);
+//   const review = await this.findOne();
+//   console.log('in FindOne ANd post... review💥💥🧧🧧', review);
+//   console.log('in FindOne ANd post... review💥💥🧧🧧', docs);
+//   if (review) {
+//     await review.constructor.calcRatings(review.tour);
+//   }
+//   next();
+// });
 
 // reviewSchema.pre(/^findOneAnd/, async function () {
 //   console.log('in preee find middleware');

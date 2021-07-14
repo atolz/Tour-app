@@ -15,6 +15,7 @@ const {
 } = require('../controllers/tour');
 const reviewRouter = require('./review');
 const bookingRouter = require('./booking');
+const savedRouter = require('./saved');
 
 const { protect, restrictAccessTo } = require('../controllers/auth');
 
@@ -22,6 +23,7 @@ const router = express.Router();
 
 router.use('/:tourId/reviews', reviewRouter);
 router.use('/:tourId/bookings', bookingRouter);
+router.use('/:tourId/saved', savedRouter);
 
 // router.param('id', isFound);
 router

@@ -7,8 +7,10 @@ block content
             each tour in tours
                 .card
                     .card__header
-                        svg.card__icon.card__icon--like
-                            use(xlink:href='img/icons.svg#icon-like')
+                        .like
+                            svg.card__icon.card__icon--like(data-tour-Id=`${tour._id}`, data-user-Id=`${user?user._id:null}`)
+                                use(xlink:href='img/icons.svg#icon-like')
+                            span= tour.saves
                         //- div.card__icon.card__icon--like 
                         //-     svg
                         //-         use(xlink:href='img/icons.svg#icon-like')
