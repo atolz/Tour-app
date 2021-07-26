@@ -30,7 +30,9 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 
   //Image cover
   if (req.files.imageCover) {
-    const imageCover = `tour-${req.params.id}-${Date.now()}.jpeg`;
+    const imageCover = `tour-${
+      req.params.id || req.body.name
+    }-${Date.now()}.jpeg`;
     await sharp(req.files.imageCover[0].buffer)
       .resize(2000, 1333)
       .toFormat('jpeg')
@@ -44,7 +46,9 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
     req.body.images = [];
     await Promise.all(
       req.files.images.map(async (img, i) => {
-        const image = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+        const image = `tour-${req.params.id || req.body.name}-${Date.now()}-${
+          i + 1
+        }.jpeg`;
         await sharp(img.buffer)
           .resize(2000, 1333)
           .toFormat('jpeg')

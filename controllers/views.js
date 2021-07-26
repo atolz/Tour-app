@@ -58,6 +58,28 @@ exports.getMyBookings = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getManageTours = catchAsync(async (req, res, next) => {
+  const tours = await Tour.find();
+
+  res.status(200).render('manage', {
+    tours,
+    title: 'Manage Tours',
+  });
+});
+exports.getUpdateTourForm = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findOne({ slug: req.params.slug });
+
+  res.status(200).render('update-tour', {
+    title: `Update ${tour.name}`,
+    tour,
+  });
+});
+exports.getCreateTourForm = (req, res, next) => {
+  res.status(200).render('create', {
+    title: 'Create New Tour',
+  });
+};
+
 exports.getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findOne({ slug: req.params.slug }).populate({
     path: 'reviews',

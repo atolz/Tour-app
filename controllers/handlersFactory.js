@@ -42,6 +42,7 @@ exports.getAll = (Model, popOption) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    console.log('body create', req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({
@@ -83,6 +84,8 @@ exports.getOne = (Model, popOption) =>
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     // eslint-disable-next-line prettier/prettier
+
+    console.log('body update', req.body);
     if (req.body.password) {
       delete req.body.password;
     }

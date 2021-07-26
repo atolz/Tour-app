@@ -3,13 +3,16 @@ import '@babel/polyfill';
 import { login, logout } from './login';
 import { displayMap } from './map-box';
 import { updateSettings } from './updateSettings';
+import { update } from './manage';
 import { bookTour } from './stripe';
-import { showAlert } from './alert';
+import { showAlert, showConfirm, closeConfirm } from './alert';
 import { hasSaved, addToSaved, removeSaved } from './save';
 // console.log('Hello from index.js');
 
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form--login');
+const updateTourForm = document.querySelector('.form--update');
+const createTourForm = document.querySelector('.form--create');
 const mapBox = document.getElementById('map');
 const logoutEl = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
@@ -17,6 +20,7 @@ const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const alert = document.querySelector('body').dataset.alert;
 const likes = document.querySelectorAll('.card__icon.card__icon--like');
+const deleteTours = document.querySelectorAll('.delete');
 // const likesCount = document.querySelector('.like span');
 
 if (loginForm) {
@@ -30,6 +34,130 @@ if (loginForm) {
   });
 }
 
+if (updateTourForm) {
+  // console.log(updateTourForm);
+  updateTourForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const updateData = new FormData();
+    updateData.append('name', document.getElementById('name').value);
+    updateData.append('price', document.getElementById('price').value);
+    updateData.append(
+      'description',
+      document.getElementById('description').value
+    );
+    updateData.append(
+      'maxGroupSize',
+      document.getElementById('group-size').value
+    );
+    updateData.append('summary', document.getElementById('summary').value);
+    updateData.append(
+      'difficulty',
+      document.getElementById('difficulty').value
+    );
+
+    await update(updateTourForm.dataset.tourId, updateData, 'update');
+  });
+}
+
+if (createTourForm) {
+  // console.log('files are....', document.getElementById('image').files);
+  document.getElementById('coverImage').addEventListener('change', () => {
+    console.log('file change');
+    console.log('files are cover', document.getElementById('coverImage').files);
+    console.log('file one is', document.getElementById('coverImage').files[0]);
+  });
+  createTourForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const createForm = new FormData();
+    console.log(document.getElementById('difficulty').value);
+
+    createForm.append('name', document.getElementById('name').value);
+    createForm.append('price', document.getElementById('price').value);
+    createForm.append('duration', document.getElementById('duration').value);
+    createForm.append('startDates[]', document.getElementById('date-1').value);
+    createForm.append('startDates[]', document.getElementById('date-2').value);
+    createForm.append('guides[]', '5c8a22c62f8fb814b56fa18b');
+    createForm.append('guides[]', '5c8a1d5b0190b214360dc057');
+    createForm.append('guides[]', '5c8a21d02f8fb814b56fa189');
+    createForm.append('images', document.getElementById('image').files[0]);
+    createForm.append('images', document.getElementById('image').files[1]);
+    createForm.append('images', document.getElementById('image').files[2]);
+    // createForm.append('images', document.getElementById('image').files[3]);
+    createForm.append(
+      'description',
+      document.getElementById('description').value
+    );
+    createForm.append(
+      'maxGroupSize',
+      document.getElementById('group-size').value
+    );
+    createForm.append('summary', document.getElementById('summary').value);
+    createForm.append(
+      'imageCover',
+      document.getElementById('coverImage').files[0]
+    );
+    createForm.append('startLocation[type]', 'Point');
+    createForm.append('startLocation[description]', 'California, USA');
+    createForm.append('startLocation[coordinates][0]', -122.29286);
+    createForm.append('startLocation[coordinates][1]', 38.294065);
+    createForm.append(
+      'startLocation[address]',
+      '560 Jefferson St, Napa, CA 94559, USA'
+    );
+
+    createForm.append('locations[0][type]', 'Point');
+    createForm.append('locations[0][day]', 4);
+    createForm.append('locations[0][description]', 'California, USA');
+    createForm.append('locations[0][coordinates][0]', -122.29286);
+    createForm.append('locations[0][coordinates][1]', 38.294065);
+    createForm.append(
+      'locations[0][address]',
+      '560 Jefferson St, Napa, CA 94559, USA'
+    );
+    // {
+    //   "type": "Point",
+    //   "description": "California, USA",
+    //   "coordinates": [-122.29286, 38.294065],
+    //   "address": "560 Jefferson St, Napa, CA 94559, USA",
+    // }
+    createForm.append(
+      'difficulty',
+      document.getElementById('difficulty').value
+    );
+
+    await update(null, createForm, 'create');
+  });
+}
+
+if (deleteTours) {
+  deleteTours.forEach((deleteTour) => {
+    deleteTour.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      showConfirm(
+        `Are you sure you want to delete ${deleteTour.dataset.tourName}`
+      );
+      const confirm = document.querySelector('.proceedConfirm');
+      const closeConfirmBox = document.querySelector('.closeConfirm');
+      if (confirm) {
+        confirm.addEventListener('click', async () => {
+          await update(deleteTour.dataset.tourId, {}, 'delete');
+          closeConfirm();
+          showAlert(
+            'Tour deleted successfully! Pls refresh this page',
+            'success'
+          );
+        });
+      }
+      if (closeConfirmBox) {
+        closeConfirmBox.addEventListener('click', () => {
+          closeConfirm();
+        });
+      }
+    });
+  });
+}
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
   // console.log(locations);
@@ -134,7 +262,7 @@ if (likes) {
       } else {
         like.nextElementSibling.textContent =
           parseInt(like.nextElementSibling.textContent, 10) - 1;
-          
+
         if (reqTimeout) clearTimeout(reqTimeout);
 
         reqTimeout = setTimeout(async () => {

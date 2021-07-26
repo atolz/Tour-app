@@ -71,11 +71,12 @@ block content
             - const descriptions = tour.description.split('\n')
             each desc of descriptions
                 p.description__text= desc
-
-    section.section-pictures
-        each image, i in tour.images
-            .picture-box
-                img.picture-box__img(src=`/img/tours/${image}`, alt=`${tour.name} Tour 1` class=`picture-box__img--${i + 1}`)
+    
+    if tour.images[0]
+        section.section-pictures
+            each image, i in tour.images
+                .picture-box
+                    img.picture-box__img(src=`/img/tours/${image}`, alt=`${tour.name} Tour 1` class=`picture-box__img--${i + 1}`)
 
     section.section-map
         #map(data-locations=`${JSON.stringify(tour.locations)}`)
@@ -84,6 +85,14 @@ block content
         .reviews
             each review in tour.reviews
                 +reviewCard(review)
+        //- .login-form
+        //-     form.form.form--login
+        //-         .form__group.ma-bt-md
+        //-             label.form__label(for='description') Review
+        //-             textarea#description.form__input(name="description", placeholder='Tour description' rows="4" cols="50", required)  
+        //-         .form__group
+        //-             button.btn.btn--green Add review
+        
 
     section.section-cta
         .cta

@@ -98,8 +98,9 @@ app.use(compression());
 //   next();
 // });
 app.use((req, res, next) => {
-  console.log('Is request secured🎈🎈🎈🎈', req.secure);
-  console.log('request cookies🍪', req.url, req.cookies);
+  console.log('Request body🎈🎈🎈🎈', req.query);
+  // console.log('Is request secured🎈🎈🎈🎈', req.secure);
+  // console.log('request cookies🍪', req.url, req.cookies);
   // console.log('request body👀👀👀', req.body);
   next();
 });

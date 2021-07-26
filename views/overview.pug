@@ -1,5 +1,12 @@
 extends base
 
+mixin like(tour, user)
+    .like
+        svg.card__icon.card__icon--like(data-tour-Id=`${tour._id}`, data-user-Id=`${user?user._id:null}`)
+            use(xlink:href='img/icons.svg#icon-like')
+        span= tour.saves
+
+
 block content 
     main.main 
         .card-container 
@@ -7,10 +14,9 @@ block content
             each tour in tours
                 .card
                     .card__header
-                        .like
-                            svg.card__icon.card__icon--like(data-tour-Id=`${tour._id}`, data-user-Id=`${user?user._id:null}`)
-                                use(xlink:href='img/icons.svg#icon-like')
-                            span= tour.saves
+                        block action
+                            +like(tour, user)
+                        
                         //- div.card__icon.card__icon--like 
                         //-     svg
                         //-         use(xlink:href='img/icons.svg#icon-like')

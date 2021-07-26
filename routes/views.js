@@ -20,7 +20,34 @@ router.get(
   authController.protect,
   viewsController.getMyBookings
 );
+//notice that this route is '/'...so using a middleware globbally in this route affects other outer routes eg /login
+// router.use(authController.protect, authController.restrictAccessTo('admin'));
 
-router.post('/update-me', authController.protect, viewsController.updateMe);
+// router.use(
+//   /update*/,
+//   authController.protect,
+//   authController.restrictAccessTo('adm')
+// );
+
+router.get(
+  '/manage-tours',
+  authController.protect,
+  authController.restrictAccessTo('admin'),
+  viewsController.getManageTours
+);
+router.get(
+  '/update-tour/:slug',
+  authController.protect,
+  authController.restrictAccessTo('admin'),
+  viewsController.getUpdateTourForm
+);
+router.get(
+  '/create-tour',
+  authController.protect,
+  authController.restrictAccessTo('admin'),
+  viewsController.getCreateTourForm
+);
+
+router.post('/update-me', viewsController.updateMe);
 
 module.exports = router;

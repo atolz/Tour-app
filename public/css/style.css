@@ -230,6 +230,11 @@ body {
   background-color: #fff;
 }
 
+.btn--red {
+  background-color: #eb4d4b;
+  color: #fff;
+}
+
 .btn--green {
   background-color: #55c57a;
   color: #fff;
@@ -607,6 +612,11 @@ body {
   overflow-x: scroll;
   -ms-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; 
+}
+.reviews::-webkit-scrollbar {
+  display: none;
 }
 .reviews__card {
   width: 30rem;
@@ -1355,4 +1365,93 @@ body {
   transform: scale(1.2);
   fill: #28b487;
   stroke: #ffffff;
+}
+.card__icon--settings{
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  fill: #28b487;
+  stroke: #ffffff;
+  transition: transform 0.6s cubic-bezier(0.68, -1, 0.32, 2.6);
+  backface-visibility: hidden;
+}
+.card__icon--settings:hover{
+  transform: rotateZ(45deg);
+  backface-visibility: hidden;
+}
+.card__icon--settings:hover ~ .manage{
+ display: flex;
+}
+
+.manage{
+  display: none;
+  position: absolute;
+  top: 3rem;
+  right: 0rem;
+  list-style: none;
+  box-shadow: 0px 5px 10px rgb(128 128 128 / 15%);
+  background-color: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  /* border: .1rem solid rgb(46, 44, 44); */
+}
+
+.manage:hover, .like:hover .manage{
+  display: flex;
+}
+
+.manage li:not(:last-child) {
+border-bottom: 1px solid #F4F4F4;
+}
+
+.manage li a{
+  padding: .8rem 2.4rem;
+  display: flex;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #444;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+}
+
+.manage li a:hover {
+  background-color: #7dd56f1a;
+  border-radius: .8rem;
+}
+
+/* -----------------------------------Popup Confirm------------------------------------- */
+.confirm{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(255,255,255,0.5); */
+}
+
+.confirm__box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0 2.5rem 8rem 2rem rgb(0 0 0 / 6%);
+  padding: 2.8rem 3.8rem;
+}
+
+.confirm__action{
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm__action button{
+  border-radius: 1rem;
 }

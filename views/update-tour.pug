@@ -1,0 +1,27 @@
+extends base
+
+block content 
+    main.main
+        .login-form
+            h2.heading-secondary.ma-bt-lg Update #{tour.name}
+            form.form.form--update(data-tour-id = `${tour._id}`)
+                .form__group
+                    label.form__label(for='name') Name
+                    input#name.form__input(type='text', placeholder='tour name', required, value=`${tour.name}`)
+                .form__group
+                    label.form__label(for='price') Price
+                    input#price.form__input(type='number', placeholder='tour price', required, value=`${tour.price}`)
+                .form__group
+                    label.form__label(for='group-size') MaxGroupSize
+                    input#group-size.form__input(type='number', placeholder='maximum size of group', required, value=`${tour.maxGroupSize}`)
+                .form__group
+                    label.form__label(for='summary') Summary
+                    textarea#summary.form__input(name="summary" rows="3" cols="50", required)= `${tour.summary}`
+                .form__group
+                    label.form__label(for='description') Description
+                    textarea#description.form__input(name="description", placeholder='Tour description' rows="4" cols="50", required)= `${tour.description}`
+                .form__group.ma-bt-md
+                    label.form__label(for='difficulty') Difficulty
+                    input#difficulty.form__input(type='text',name='difficulty', placeholder='difficulty', required, value=`${tour.difficulty}`)
+                .form__group
+                    button.btn.btn--green Update

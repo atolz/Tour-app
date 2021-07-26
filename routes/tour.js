@@ -29,7 +29,13 @@ router.use('/:tourId/saved', savedRouter);
 router
   .route('/')
   .get(getAllTours)
-  .post(protect, restrictAccessTo('admin', 'guide', 'lead-guide'), createTour);
+  .post(
+    protect,
+    restrictAccessTo('admin', 'guide', 'lead-guide'),
+    uploadTourImages,
+    resizeTourImages,
+    createTour
+  );
 
 router.route('/stats').get(getToursStats);
 router.route('/top-5-cheap').get(aliasTopCheap5, getAllTours);

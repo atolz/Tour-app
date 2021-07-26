@@ -1,0 +1,18 @@
+extends overview 
+
+block action 
+    //- .confirm 
+    //-     .confirm__box 
+    //-         h2.heading-secondary.ma-bt-lg Confrim Your Action 
+    //-         h4.card__sub-heading.ma-bt-md Are your sure you want to delete this tour?
+    //-         .confirm__action 
+    //-             button.btn.btn--red Cancle
+    //-             button.btn.btn--green Confirm
+    .like
+        svg.card__icon.card__icon--settings(data-tour-Id=`${tour._id}`, data-user-Id=`${user?user._id:null}`)
+                use(xlink:href='img/icons.svg#icon-cog')
+        span Manage
+        ul.manage 
+            li: a(href=`/update-tour/${tour.slug}`, style='color: blue') Update
+            li: a.delete(href='#', style='color: red', data-tour-name=`${tour.name}`, data-tour-id=`${tour._id}`) Delete
+            li: a(href='/create-tour', style='color: seagreen') Create New

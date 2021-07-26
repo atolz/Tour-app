@@ -66,6 +66,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log('in protect middleware.........');
   //check and find token
   // console.log(req.rateLimit);
 

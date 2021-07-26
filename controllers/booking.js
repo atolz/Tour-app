@@ -76,7 +76,6 @@ const createBookingWebhook = catchAsync(async (sessionData) => {
     bookMethod: 'stripe',
   });
 });
-
 // exports.createBookingCheckout = catchAsync(async (req, res, next) => {
 //   console.log('in creat bookings CHeckout🎈🧨🎈');
 //   const { tour, user, price, bookMethod } = req.query;

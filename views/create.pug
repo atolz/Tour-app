@@ -1,0 +1,55 @@
+extends base
+
+block content 
+    main.main
+        .login-form
+            h2.heading-secondary.ma-bt-lg Create new tour
+            form.form.form--create
+                .form__group
+                    label.form__label(for='name') Name
+                    input#name.form__input(type='text', placeholder='tour name',name='name', required)
+                .form__group
+                    label.form__label(for='coverImage') Cover Image
+                    input#coverImage.form__input(type='file', name='imageCover', placeholder='Tour image cover', required)
+                .form__group
+                    label.form__label(for='image') Images
+                    input#image.form__input(type='file', placeholder='Tour display image', multiple, accept="image/*")
+                //- .form__group
+                //-     label.form__label(for='image-1') Image 1
+                //-     input#image-1.form__input(type='file', placeholder='Tour display image', required)
+                //- .form__group
+                //-     label.form__label(for='image-2') Image 2
+                //-     input#image-2.form__input(type='file', placeholder='Tour display image', required)
+                //- .form__group
+                //-     label.form__label(for='image-3') Image 3
+                //-     input#image-3.form__input(type='file', placeholder='Tour display image', required)
+                .form__group
+                    label.form__label(for='price') Price
+                    input#price.form__input(type='number', placeholder='tour price', required)
+                .form__group
+                    label.form__label(for='date-1') Start Date
+                    input#date-1.form__input(type='date', placeholder='Tour start date', required, min='2021-07-20')
+                .form__group
+                    label.form__label(for='date-2') Start Date 2
+                    input#date-2.form__input(type='date', placeholder='Tour start date', required, min='2021-07-20')
+                .form__group
+                    label.form__label(for='group-size') MaxGroupSize
+                    input#group-size.form__input(type='number', placeholder='maximum size of group', required)
+                .form__group
+                    label.form__label(for='duration') Duration
+                    input#duration.form__input(type='number', placeholder='Duration of tour', required)
+                .form__group
+                    label.form__label(for='summary') Summary
+                    textarea#summary.form__input(name="summary" placeholder='Tour summary' rows="3" cols="50", required)
+                .form__group
+                    label.form__label(for='description') Description
+                    textarea#description.form__input(name="description", placeholder='Tour description' rows="4" cols="50", required)         
+                .form__group.ma-bt-md
+                    label.form__label(for='difficulty') Difficulty
+                    select#difficulty.form__input
+                        optgroup(label='group')
+                            option(value='easy') Easy 
+                            option(value='medium') Medium 
+                            option(value='difficult') Difficult 
+                .form__group
+                    button.btn.btn--green Create
