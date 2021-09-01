@@ -4,9 +4,9 @@ View at: https://book-tours.herokuapp.com/
 
 Login with::
 
-email: guestuser@tours.io 
+✉️email: guestuser@tours.io 
 
-Password: guestuser
+🔑Password: guestuser
 
 Mobile view in progress...
 
